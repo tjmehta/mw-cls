@@ -99,7 +99,7 @@ app.get('/',
   session.json('foo.bar')); // res.sends { bar: 'value' }, code defaults to 200
 ```
 
-## TODO
+## TODO methods
 mv, cp, del, unset, setFromReq
 
 ## License
