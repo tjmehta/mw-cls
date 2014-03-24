@@ -1,107 +1,123 @@
-mw-cls [![Build Status](https://travis-ci.org/tjmehta/mw-cls.png)](https://travis-ci.org/tjmehta/mw-cls)
+mw-cls [![Build Status](https://travis-ci.org/tjmehta/mw-mwCLS.png)](https://travis-ci.org/tjmehta/mw-cls)
 ======
 
 Advanced CLS (continuation local storage) middleware (for express, restify, ...)
 
-# Namespace middleware
+## Namespace middleware
+
+### mwCLS.createNamespaceMiddleware(name)
 
 ```js
-var session = cls.createNamespaceMiddleware('session');
+var session = mwCLS.createNamespaceMiddleware('session');
 ```
 
-## .run()
+### namespace.run()
 
 run the following middleware within the namespace
 
 ```js
-var cls = require('mw-cls');
-var session = cls.createNamespaceMiddleware('session');
+var mwCLS = require('mw-cls');
+var session = mwCLS.createNamespaceMiddleware('session');
 
 app.use(session.run());
 ```
 
-## .set(key, val [, forceCreateKeypath=true])
+### namespace.set(keypath, val)
+### namespace.set(keypath, val, force)
 
-set the namespace key with a value
+set the namespace keypath with a value
+defaults: force = true
+force - force creates the keypathpath if it DNE
 
 ```js
-var cls = require('mw-cls');
-var session = cls.createNamespaceMiddleware('session');
+var mwCLS = require('mw-cls');
+var session = mwCLS.createNamespaceMiddleware('session');
 
-app.use(session.run()); # required
+app.use(session.run()); // must be first
 app.get('/',
-  session.set('foo.bar.baz', 'value'),
-  ...);
+  session.set('foo.bar.baz', 'value'), ...);
+  // cls.getNamespace('session').get('foo').bar.baz becomes 'value'
 ```
 
-## .asyncSet(key, val [, opts={forceCreateKeypath:true, includeError:false}])
+### namespace.asyncSet(keypath, val)
+### namespace.asyncSet(keypath, val, opts)
 
-set the namespace key as the result of an async function
+set the namespace keypath as the result of an async function
+defaults: opts = { force: true, includeError: false }
+force - force creates the keypathpath if it DNE
+includeError - specify whether to ignore/include the error arg
+
 
 ```js
-var cls = require('mw-cls');
-var session = cls.createNamespaceMiddleware('session');
-
-app.use(session.run()); # required
-app.get('/',
-  session.asyncSet('foo.bar.baz', asyncValue),
-  ...); // session.get('foo').bar.baz becomes 'value'
-
+var mwCLS = require('mw-cls');
+var session = mwCLS.createNamespaceMiddleware('session');
 function asyncValue (cb) {
   setTimeout(function () {
     cb(null, 'value');
   }, 100);
 }
+
+app.use(session.run()); // must be first
+app.get('/',
+  session.asyncSet('foo.bar.baz', asyncValue), ...);
+  // cls.getNamespace('session').get('foo').bar.baz becomes 'value'
+
 ```
 
 includeError option
 ```js
-var cls = require('mw-cls');
-var session = cls.createNamespaceMiddleware('session');
-
-app.use(session.run()); # required
-app.get('/',
-  session.asyncSet('foo.bar.baz', asyncValue, { includeError:true }),
-  ...); // session.get('foo').bar.baz becomes [null, 'value']
-
+var mwCLS = require('mw-cls');
+var session = mwCLS.createNamespaceMiddleware('session');
 function asyncValue (cb) {
   setTimeout(function () {
     cb(null, 'value');
   }, 100);
 }
+
+app.use(session.run()); // must be first
+var opts =  { includeError:true };
+app.get('/',
+  session.asyncSet('foo', asyncValue, opts), ...);
+  // cls.getNamespace('session').get('foo') becomes [null, 'value']
+
 ```
 
-## .send([code, ]key [, forceReturnKeypath=true])
-// forceReturnKeypath means no errors if keypath DNE
+### namespace.send(keypath)
+### namespace.send(code, keypath)
 
-res.send the value for the namespace key
+res.send the value for the namespace keypath
+defaults: code = 200
 
 ```js
-var cls = require('mw-cls');
-var session = cls.createNamespaceMiddleware('session');
+var mwCLS = require('mw-cls');
+var session = mwCLS.createNamespaceMiddleware('session');
 
-app.use(session.run()); # required
+app.use(session.run()); // must be first
 app.get('/',
-  session.set('foo.bar.baz', 'value'), // session.get('foo').bar.baz becomes 'value'
-  session.send('foo.bar.baz')); // res.sends 'value', code defaults to 200
+  session.set('foo.bar.baz', 'value'),
+  session.send('foo.bar.baz'));
+  // session.get('foo').bar.baz becomes 'value'
+  // res.sends 'value', code defaults to 200
 ```
 
-## .json([code, ]key [, forceReturnKeypath=true])
-// forceReturnKeypath means no errors if keypath DNE
+### namespace.json(keypath)
+### namespace.json(code, keypath)
 
 res.json the value for the namespace key
 
 ```js
-var cls = require('mw-cls');
-var session = cls.createNamespaceMiddleware('session');
+var mwCLS = require('mw-cls');
+var session = mwCLS.createNamespaceMiddleware('session');
 
-app.use(session.run()); # required
+app.use(session.run()); // must be first
 app.get('/',
-  session.set('foo.bar.baz', 'value'), // session.get('foo').bar.baz becomes 'value'
-  session.json('foo.bar')); // res.sends { bar: 'value' }, code defaults to 200
+  session.set('foo.bar.baz', 'value'),
+  session.json('foo.bar'));
+  // session.get('foo').bar.baz becomes 'value'
+  // res.sends { bar: 'value' }, code defaults to 200
 ```
 
-## TODO methods
+### TODO methods
 mv, cp, del, unset, setFromReq
 
 ## License
