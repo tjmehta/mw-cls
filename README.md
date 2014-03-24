@@ -25,9 +25,9 @@ app.use(session.run());
 ### namespace.set(keypath, val)
 ### namespace.set(keypath, val, force)
 
-set the namespace keypath with a value
-defaults: force = true
-force - force creates the keypathpath if it DNE
+* set the namespace keypath with a value
+* defaults: force = true
+* force - force creates the keypathpath if it DNE
 
 ```js
 var mwCLS = require('mw-cls');
@@ -42,10 +42,10 @@ app.get('/',
 ### namespace.asyncSet(keypath, val)
 ### namespace.asyncSet(keypath, val, opts)
 
-set the namespace keypath as the result of an async function
-defaults: opts = { force: true, includeError: false }
-force - force creates the keypathpath if it DNE
-includeError - specify whether to ignore/include the error arg
+* set the namespace keypath as the result of an async function
+* defaults: opts = { force: true, includeError: false }
+* force - force creates the keypathpath if it DNE
+* includeError - specify whether to ignore/include the error arg
 
 
 ```js
@@ -85,8 +85,8 @@ app.get('/',
 ### namespace.send(keypath)
 ### namespace.send(code, keypath)
 
-res.send the value for the namespace keypath
-defaults: code = 200
+* res.send the value for the namespace keypath
+* defaults: code = 200
 
 ```js
 var mwCLS = require('mw-cls');
@@ -103,7 +103,8 @@ app.get('/',
 ### namespace.json(keypath)
 ### namespace.json(code, keypath)
 
-res.json the value for the namespace key
+* res.json the value for the namespace key
+* defaults: code = 200
 
 ```js
 var mwCLS = require('mw-cls');
