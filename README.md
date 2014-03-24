@@ -44,8 +44,8 @@ var session = cls.createNamespaceMiddleware('session');
 
 app.use(session.run()); # required
 app.get('/',
-  session.asyncSet('foo.bar.baz', asyncValue), // session.get('foo').bar.baz becomes 'value'
-  ...);
+  session.asyncSet('foo.bar.baz', asyncValue),
+  ...); // session.get('foo').bar.baz becomes 'value'
 
 function asyncValue (cb) {
   setTimeout(function () {
@@ -61,8 +61,8 @@ var session = cls.createNamespaceMiddleware('session');
 
 app.use(session.run()); # required
 app.get('/',
-  session.asyncSet('foo.bar.baz', asyncValue, { includeError:true }), // session.get('foo').bar.baz becomes [null, 'value']
-  ...);
+  session.asyncSet('foo.bar.baz', asyncValue, { includeError:true }),
+  ...); // session.get('foo').bar.baz becomes [null, 'value']
 
 function asyncValue (cb) {
   setTimeout(function () {
@@ -71,7 +71,8 @@ function asyncValue (cb) {
 }
 ```
 
-## .send([code, ]key [, forceReturnKeypath=true]) // forceReturnKeypath means no errors if keypath DNE
+## .send([code, ]key [, forceReturnKeypath=true])
+// forceReturnKeypath means no errors if keypath DNE
 
 res.send the value for the namespace key
 
@@ -85,7 +86,8 @@ app.get('/',
   session.send('foo.bar.baz')); // res.sends 'value', code defaults to 200
 ```
 
-## .json([code, ]key [, forceReturnKeypath=true]) // forceReturnKeypath means no errors if keypath DNE
+## .json([code, ]key [, forceReturnKeypath=true])
+// forceReturnKeypath means no errors if keypath DNE
 
 res.json the value for the namespace key
 
