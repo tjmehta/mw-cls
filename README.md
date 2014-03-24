@@ -1,4 +1,4 @@
-mw-cls [![Build Status](https://travis-ci.org/tjmehta/mw-mwCLS.png)](https://travis-ci.org/tjmehta/mw-cls)
+mw-cls [![Build Status](https://travis-ci.org/tjmehta/mw-cls.png)](https://travis-ci.org/tjmehta/mw-cls)
 ======
 
 Advanced CLS (continuation local storage) middleware (for express, restify, ...)
