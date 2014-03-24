@@ -32,7 +32,8 @@
   "devDependencies": {
     "should": "^3.2.0-beta1",
     "mocha": "^1.18.2",
-    "supertest": "^0.10.0"
+    "supertest": "^0.10.0",
+    "express": "^3.5.0"
   },
   "dependencies": {
     "continuation-local-storage": "^3.0.0",
